@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="resources/qrcode.js"></script>
+    <script type="text/javascript" src="resources/jquery.min.js"></script>
+    <title>QR Code Export</title>
+</head>
+
+<body>
+    <p>Please enter number of team</p><input id="teamNum" type="number"><br>
+    <p>Please enter score of team</p><input id="teamScore" type="number"><br>
+    <button id="export" type="button" onclick="qrify()">Export Data</button>
+
+
+    <div id="qrcode" style="width:100px; height:100px; margin-top:15px; margin-bottom: 50px"></div>
+
+    <script type="text/javascript">
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width: 250,
+            height: 250
+        });
+
+
+        function qrify() {
+            var exportObj = {
+                "teamNum": document.getElementById("teamNum").value,
+                "teamScore": document.getElementById("teamScore").value
+            };
+
+            qrcode.makeCode(JSON.stringify(exportObj));
+        }
+    </script>
+</body>
+
+</html>
