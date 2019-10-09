@@ -3,7 +3,8 @@
 
 <head>
     <title>Qr Code Scanner</title>
-    <script type="text/javascript" src="resources/instascan.min.js"></script>
+    <script type="text/javascript" src="res/instascan.min.js"></script>
+    <link rel="stylesheet" href="res/bulma.min.css">
 </head>
 
 <body>
@@ -16,7 +17,7 @@
         });
         Instascan.Camera.getCameras().then(function(cameras) {
             if (cameras.length > 0) {
-                scanner.start(cameras[0]);
+                scanner.start(cameras[1]);
             } else {
                 console.error('No cameras found.');
             }

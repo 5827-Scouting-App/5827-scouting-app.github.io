@@ -4,37 +4,63 @@
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script type="text/javascript" src="resources/qrcode.js"></script>
-    <script type="text/javascript" src="resources/jquery.min.js"></script>
-    <script type="text/javascript" src="resources/instascan.min.js"></script>
+    <script type="text/javascript" src="res/qrcode.js"></script>
+    <script type="text/javascript" src="res/jquery.min.js"></script>
+    <script type="text/javascript" src="res/instascan.min.js"></script>
+    <link rel="stylesheet" href="res/bulma.min.css">
     <title>QR Scanner and Decoder</title>
 </head>
 
-<body>
-    <p>Your name</p><input id="scoutName" type="text"><br>
-    <p>Team Number</p><input id="teamNum" type="number"><br>
-    <p>Match Number</p><input id="matchNum" type="number"><br>
-    <p>Successful Hatch panels</p><button onclick="sub('hatchNum')">-</button><input id="hatchNum" type="number" value="0"><button onclick="add('hatchNum')">+</button><br>
-    <p>Dropped Hatch panels</p><button onclick="sub('badHatchNum')">-</button><input id="badHatchNum" type="number" value="0"><button onclick="add('badHatchNum')">+</button><br>
-    <br>
-    <br>
-    <button id="export" type="button" onclick="qrify()">Export Data</button>
+<body style="padding: 5%;">
+    <div style="padding: 10px;">
+        <p>Your name</p><input class="input" id="scoutName" placeholder="Anirudh" type="text"><br>
+        <p>Team Number</p><input class="input" id="teamNum" placeholder="5827" type="number"><br>
+        <p>Match Number</p><input class="input" id="matchNum" placeholder="1" type="number"><br>
+        Successful Hatch panels
+        <div class="field has-addons" style="padding:5px; width: 100%;">
+            <p class="control">
+                <a class="button is-danger" onclick="sub('hatchNum')">-</a>
+            </p>
+            <p class="control">
+                <input class="input" id="hatchNum" type="number" value="0">
+            </p>
+            <p class="control">
+                <a class="button is-primary" onclick="add('hatchNum')">+</a>
+            </p>
+        </div>
+        Dropped Hatch Panels
+        <div class="field has-addons" style="padding:5px; width: 100%;">
+            <p class="control">
+                <a class="button is-danger" onclick="sub('badHatchNum')">-</a>
+            </p>
+            <p class="control">
+                <input class="input" id="badHatchNum" type="number" value="0">
+            </p>
+            <p class="control">
+                <a class="button is-primary" onclick="add('badHatchNum')">+</a>
+            </p>
+        </div>
+        <br>
+        <br>
+        <a class="button is-info" id="export" type="button" onclick="qrify()">Export Data</a>
+    </div>
 
 
-    <div id="qrcode" style="width:100px; height:100px; margin-top:15px; margin-bottom: 50px"></div>
+    <div id="qrcode" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div>
+    Show this data to Kevin!
 
     <script type="text/javascript">
         var qrcode = new QRCode(document.getElementById("qrcode"), {
-            width: 250,
-            height: 250
+            width: 500,
+            height: 500
         });
         function qrify() {
             var exportObj = {
                 scoutName: document.getElementById("scoutName").value,
                 teamNum: document.getElementById("teamNum").value,
                 matchNum: document.getElementById("matchNum").value,
-                successfulHatch: document.getElementById("hatchNum").value, 
-                failedHatch: document.getElementById("badHatchNum").value               
+                successfulHatch: document.getElementById("hatchNum").value,
+                failedHatch: document.getElementById("badHatchNum").value
             };
             qrcode.makeCode(JSON.stringify(exportObj));
         }
@@ -46,7 +72,11 @@
 
         function sub(val) {
             var x = document.getElementById(val);
-            x.value = parseInt(x.value) - 1;
+            if (parseInt(x.value) - 1 < 0) {
+                x.value = 0;
+            } else {
+                x.value = parseInt(x.value) - 1;
+            }
         }
     </script>
 </body>
