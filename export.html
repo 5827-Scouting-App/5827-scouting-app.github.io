@@ -6,12 +6,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script type="text/javascript" src="resources/qrcode.js"></script>
     <script type="text/javascript" src="resources/jquery.min.js"></script>
-    <title>QR Code Export</title>
+    <script type="text/javascript" src="resources/instascan.min.js"></script>
+    <title>QR Scanner and Decoder</title>
 </head>
 
 <body>
-    <p>Please enter number of team</p><input id="teamNum" type="number"><br>
-    <p>Please enter score of team</p><input id="teamScore" type="number"><br>
+    <p>Your name</p><input id="scoutName" type="text"><br>
+    <p>Team Number</p><input id="teamNum" type="number"><br>
+    <p>Match Number</p><input id="matchNum" type="number"><br>
+    <p>Successful Hatch panels</p><button onclick="sub('hatchNum')">-</button><input id="hatchNum" type="number" value="0"><button onclick="add('hatchNum')">+</button><br>
+    <p>Dropped Hatch panels</p><button onclick="sub('badHatchNum')">-</button><input id="badHatchNum" type="number" value="0"><button onclick="add('badHatchNum')">+</button><br>
+    <br>
+    <br>
     <button id="export" type="button" onclick="qrify()">Export Data</button>
 
 
@@ -22,17 +28,28 @@
             width: 250,
             height: 250
         });
-
-
         function qrify() {
             var exportObj = {
-                "teamNum": document.getElementById("teamNum").value,
-                "teamScore": document.getElementById("teamScore").value
+                scoutName: document.getElementById("scoutName").value,
+                teamNum: document.getElementById("teamNum").value,
+                matchNum: document.getElementById("matchNum").value,
+                successfulHatch: document.getElementById("hatchNum").value, 
+                failedHatch: document.getElementById("badHatchNum").value               
             };
-
             qrcode.makeCode(JSON.stringify(exportObj));
+        }
+
+        function add(val) {
+            var x = document.getElementById(val);
+            x.value = parseInt(x.value) + 1;
+        }
+
+        function sub(val) {
+            var x = document.getElementById(val);
+            x.value = parseInt(x.value) - 1;
         }
     </script>
 </body>
+
 
 </html>
