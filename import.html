@@ -19,7 +19,7 @@
     <script type="text/javascript">
         let scanner = new Instascan.Scanner({
             video: document.getElementById("preview"),
-            continous: false
+            continous: true
         });
         Instascan.Camera.getCameras().then(function(cameras) {
             if (cameras.length > 0) {
