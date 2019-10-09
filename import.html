@@ -8,6 +8,12 @@
 
 <body>
     <video id="preview"></video>
+    <p>Team Number:
+        <p id="teamNum"></p>
+    </p>
+    <p>Team Score:
+        <p id="teamScore"></p>
+    </p>
     <button type="button" onclick="execute()">Decode QR Code</button>
     <script type="text/javascript">
         let scanner = new Instascan.Scanner({
@@ -26,7 +32,9 @@
 
         function execute() {
             let result = scanner.scan();
-            console.log(result.content);
+            let incomingCode = JSON.parse(result.content);
+            document.getElementById("teamNum").innerHTML = incomingCode.teamNum;
+            document.getElementById("teamScore").innerHTML = incomingCode.teamScore;
         }
     </script>
 </body>
