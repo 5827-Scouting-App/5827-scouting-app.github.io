@@ -14,7 +14,7 @@
 <br>
 <a href="" id="install">install</a>
 <br>
-<p>Build: 2014HR 10/9 1D</p>
+<p>Build: 2014HR 10/9 1E</p>
 
 
 <script>
@@ -28,9 +28,6 @@
     let deferredPrompt;
 
     window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
         // Stash the event so it can be triggered later.
         deferredPrompt = e;
 
