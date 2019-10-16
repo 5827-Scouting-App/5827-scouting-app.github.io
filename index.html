@@ -7,20 +7,61 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="5827 Scouting">
+    <meta name="theme-color" content="purple">
+    <meta name="viewport" content="initial-scale">
     <link rel="apple-touch-icon" href="/icon/icon-512x512.png">
+    <link rel="stylesheet" href="res/bulma.min.css">
 </head>
 
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <!--<div class="navbar-start">
+            <a class="navbar-item" href="#">
+                &laquo; Back
+            </a>
+        </div>-->
+        <div class="navbar-end">
+            <a class="navbar-item" href="#">
+                <img src="icon/logo.png" alt="CodePurple Scouting" style="height: 200%;;">
+            </a>
+        </div>
+    </nav>
+    <section class="section">
+
+        <a href="import.html" class="button"> Scanner </a>
+        <br>
+        <a href="export.html" class="button"> QR Maker </a>
+        <br>
+        <section style="padding: 10px;">
+            <div class="card" style="padding: 10px;">
+                <div class="card-content">
+                    <a class="title" style="text-align: center;" href="export.html">
+                        Match Scouting &raquo;
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section style="padding: 10px; height: 100%;">
+            <div class="card" style="padding: 10px;">
+                <div class="card-content">
+                    <a class="title" style="text-align: center;" href="import.html">
+                        Drive Team Info &raquo;
+                    </a>
+                </div>
+            </div>
+        </section>
+        <br>
+        <button id="install" onclick="install()">install</button>
+        <br>
+        <p>Build: 2201HR 10/12 22</p>
 
 
-<a href="import.html"> Scanner </a>
-<br>
-<a href="export.html"> QR Maker </a>
-<br>
-<br>
-<button id="install" onclick="install()">install</button>
-<br>
-<p>Build: 2201HR 10/12 22</p>
+    </section>
+</body>
 
+
+<!--
+<div>
 <script src="service-worker.js"></script>
 <script src="a.js"></script>
 <script>
@@ -62,5 +103,7 @@
         }
     }
 </script>
+</div>
+-->
 
 </html>
