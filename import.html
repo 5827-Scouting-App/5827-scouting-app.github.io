@@ -3,39 +3,57 @@
 
 <head>
     <title>Qr Code Scanner</title>
-    <script type="text/javascript" src="res/instascan.min.js"></script>
+    <script type="text/javascript" src="res/jsQR.js"></script>
     <link rel="stylesheet" href="res/bulma.min.css">
 </head>
 
 <body>
-    <video id="preview"></video>
-    <p>Team Number:
-        <p id="teamNum"></p>
-    </p>
-    <p>Team Score:
-        <p id="teamScore"></p>
-    </p>
-    <button type="button" onclick="execute()">Decode QR Code</button>
+    <canvas id="canvas" height="480" width="640"></canvas>
+    <div id="output">
+        <span>Name of Scout: <div id="scoutName"></div></span>
+        <span>Team Number: <div id="teamNum"></div></span>
+        <span>Match Number: <div id="matchNum"></div></span>
+        <span>Successful Hatches: <div id="hatchNum"></div></span>
+        <span>Failed Hatches: <div id="badHatchNum"></div></span>
+    </div>
     <script type="text/javascript">
-        let scanner = new Instascan.Scanner({
-            video: document.getElementById("preview"),
-            continous: true
-        });
-        Instascan.Camera.getCameras().then(function(cameras) {
-            if (cameras.length > 0) {
-                scanner.start(cameras[1]);
-            } else {
-                console.error('No cameras found.');
+        var video = document.createElement("video");
+        var canvasElement = document.getElementById("canvas");
+        var canvas = canvasElement.getContext("2d");
+
+        // Use facingMode: environment to attemt to get the front camera on phones
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: "environment"
             }
-        }).catch(function(e) {
-            console.error(e);
+        }).then(function(stream) {
+            video.srcObject = stream;
+            video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+            video.play();
+            requestAnimationFrame(tick);
         });
 
-        function execute() {
-            let result = scanner.scan();
-            let incomingCode = JSON.parse(result.content);
-            document.getElementById("teamNum").innerHTML = incomingCode.teamNum;
-            document.getElementById("teamScore").innerHTML = incomingCode.teamScore;
+        function tick() {
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                canvasElement.hidden = false;
+
+                canvasElement.height = video.videoHeight;
+                canvasElement.width = video.videoWidth;
+                canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+                var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+                var code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
+                if (code) {
+                    let incomingData = JSON.parse(code.data);
+                    document.getElementById("scoutName").innerHTML = incomingData.scoutName;
+                    document.getElementById("teamNum").innerHTML = incomingData.teamNum;
+                    document.getElementById("matchNum").innerHTML = incomingData.matchNum;
+                    document.getElementById("hatchNum").innerHTML = incomingData.successfulHatch;
+                    document.getElementById("badHatchNum").innerHTML = incomingData.failedHatch;
+                }
+            }
+            requestAnimationFrame(tick);
         }
     </script>
 </body>
