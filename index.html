@@ -52,9 +52,9 @@
                     </div>
                     <div style="padding: 5px;">
                         <a class="button is-outlined is-light is-large" style="width: 100%; padding: 30px;"
-                            href="export.html">
+                            href="#">
                             <span>
-                                -
+                                Pit Scouting
                             </span>
                             <span class="icon is-large">
                                 <i class="fas fa-chevron-right"></i>
@@ -89,8 +89,7 @@
 
 
 <div>
-    <script src="service-worker.js"></script>
-    <script src="a.js"></script>
+    <script src="pwabuilder-sw.js"></script>
     <script>
         //var btnAdd = document.getElementById("install");
         // This is the "Offline copy of pages" service worker
@@ -104,7 +103,7 @@
             } else {
                 // Register the service worker
                 navigator.serviceWorker
-                    .register("service-worker.js", {
+                    .register("pwabuilder-sw.js", {
                         scope: "./"
                     })
                     .then(function (reg) {
@@ -112,6 +111,7 @@
                     });
             }
         }
+
 
 
         let deferredPrompt = null;
