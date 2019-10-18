@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="res/bulma.min.css">
 </head>
 
-<body>
+<body class="has-navbar-fixed-top">
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-start">
+            <a class="navbar-item" href="#">
+                &laquo; Back
+            </a>
+        </div>
+        <div class="navbar-end">
+            <a class="navbar-item" href="#">
+                <img src="icon/logo.png" alt="CodePurple Scouting">
+            </a>
+        </div>
+    </nav>
     <canvas id="canvas" height="480" width="640"></canvas>
     <div id="output">
         <span>Name of Scout: <div id="scoutName"></div></span>
@@ -26,7 +38,7 @@
             video: {
                 facingMode: "environment"
             }
-        }).then(function(stream) {
+        }).then(function (stream) {
             video.srcObject = stream;
             video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
             video.play();
