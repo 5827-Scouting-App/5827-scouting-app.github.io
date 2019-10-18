@@ -11,7 +11,7 @@
     <title>QR Scanner and Decoder</title>
 </head>
 
-<body class="has-navbar-fixed-top">
+<body class="has-navbar-fixed-top is-fullheight" style="">
 
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-start">
@@ -19,56 +19,68 @@
                 &laquo; Back
             </a>
         </div>
-        <div class="navbar-end">
-            <a class="navbar-item" href="#">
-                <img src="icon/logo.png" alt="CodePurple Scouting">
-            </a>
-        </div>
     </nav>
+    <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
+        <div style="padding: 10px; padding-top: 7%;" class="container is-fluid">
+            <p>Your name</p><input class="input" id="scoutName" placeholder="Anirudh" type="text"><br>
+            <p>Team Number</p><input class="input" id="teamNum" placeholder="5827" type="number"><br>
+            Match Number<br>
+            <div class="field has-addons" style="padding:5px; width: 100%;">
+                <p class="control">
+                    <a class="button is-danger" onclick="sub('matchNum')">-</a>
+                </p>
+                <p class="control">
+                    <input class="input" id="matchNum" type="number" value="1">
+                </p>
+                <p class="control">
+                    <a class="button is-primary" onclick="add('matchNum')">+</a>
+                </p>
+            </div>
+            Successful Hatch panels
+            <div class="field has-addons" style="padding:5px; width: 100%;">
+                <p class="control">
+                    <a class="button is-danger" onclick="sub('hatchNum')">-</a>
+                </p>
+                <p class="control">
+                    <input class="input" id="hatchNum" type="number" value="0">
+                </p>
+                <p class="control">
+                    <a class="button is-primary" onclick="add('hatchNum')">+</a>
+                </p>
+            </div>
+            Dropped Hatch Panels
+            <div class="field has-addons" style="padding:5px; width: 100%;">
+                <p class="control">
+                    <a class="button is-danger" onclick="sub('badHatchNum')">-</a>
+                </p>
+                <p class="control">
+                    <input class="input" id="badHatchNum" type="number" value="0">
+                </p>
+                <p class="control">
+                    <a class="button is-primary" onclick="add('badHatchNum')">+</a>
+                </p>
+            </div>
+            <br>
+            <br>
+            <a class="button is-info" id="export" type="button" onclick="qrify()">Export Data</a>
+            <br>
+            <br>
+            <div id="codes"></div>
 
-    <div style="padding: 10px;">
-        <p>Your name</p><input class="input" id="scoutName" placeholder="Anirudh" type="text"><br>
-        <p>Team Number</p><input class="input" id="teamNum" placeholder="5827" type="number"><br>
-        <p>Match Number</p><input class="input" id="matchNum" placeholder="1" type="number"><br>
-        Successful Hatch panels
-        <div class="field has-addons" style="padding:5px; width: 100%;">
-            <p class="control">
-                <a class="button is-danger" onclick="sub('hatchNum')">-</a>
-            </p>
-            <p class="control">
-                <input class="input" id="hatchNum" type="number" value="0">
-            </p>
-            <p class="control">
-                <a class="button is-primary" onclick="add('hatchNum')">+</a>
-            </p>
+            Show this data to Kevin!
         </div>
-        Dropped Hatch Panels
-        <div class="field has-addons" style="padding:5px; width: 100%;">
-            <p class="control">
-                <a class="button is-danger" onclick="sub('badHatchNum')">-</a>
-            </p>
-            <p class="control">
-                <input class="input" id="badHatchNum" type="number" value="0">
-            </p>
-            <p class="control">
-                <a class="button is-primary" onclick="add('badHatchNum')">+</a>
-            </p>
-        </div>
-        <br>
-        <br>
-        <a class="button is-info" id="export" type="button" onclick="qrify()">Export Data</a>
-    </div>
+    </section>
 
-
-    <div id="qrcode" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div>
-    Show this data to Kevin!
 
     <script type="text/javascript">
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            width: 500,
-            height: 500
-        });
+        var n = 0;
         function qrify() {
+            var name = "qrcode" + n;
+            $('#codes').prepend('<h3>Match ' + document.getElementById("matchNum").value + '</h3><div id="' + name + '" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div>');
+            var qrcode = new QRCode(document.getElementById(name), {
+                width: 500,
+                height: 500
+            });
             var exportObj = {
                 scoutName: document.getElementById("scoutName").value,
                 teamNum: document.getElementById("teamNum").value,
@@ -77,6 +89,7 @@
                 failedHatch: document.getElementById("badHatchNum").value
             };
             qrcode.makeCode(JSON.stringify(exportObj));
+            n++;
         }
 
         function add(val) {
