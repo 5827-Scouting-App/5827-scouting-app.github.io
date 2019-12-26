@@ -82,7 +82,7 @@
         };
         function qrify() {
             var name = "qrcode" + n;
-            $('#codes').prepend('<div class="boorder"><h3>Match ' + document.getElementById("matchNum").value + '</h3><div id="' + name + '" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div></div><br>');
+            $('#codes').prepend('<div class="boorder"><h3>Match ' + document.getElementById("matchNum").value + '</h3><div class="outline" id="' + name + '" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div></div><br>');
             var qrcode = new QRCode(document.getElementById(name), {
                 width: 500,
                 height: 500

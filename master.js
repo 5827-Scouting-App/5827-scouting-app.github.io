@@ -1,5 +1,6 @@
 var data = [];
 var tData;
+var sort = new Tablesort(document.getElementById('datTable'));
 function launchAddModal() {
     $('#addDataModal').toggleClass('is-active')
     $('#success').html('');
@@ -81,11 +82,18 @@ function importData() {
             tCargo: 0,
             fHatch: 0,
             fCargo: 0,
+            aHatch: 0,
+            aCargo: 0,
             pCycles: 0,
             tCycles: 0,
             matches: [],
             mScouts: [],
-            pScouts: []
+            pScouts: [],
+            wins: 0,
+            draw: 0,
+            loss: 0,
+            aClimbs: [],
+            didClimb: 0
         }
         if (tmp.type == 0) {
             obj.played++;
@@ -127,5 +135,18 @@ function importData() {
 function refreshTable() {
     //clear table
     //add each element to table
+    $('#numTable').empty();
+    $('#datTable').empty();
 
+    for(var i = 0; i < data.length; i++) {
+        var num = '<tr><td>' + (i+1) + '</td></tr>'
+        $('#numTable').append(num);
+        //
+        //
+
+        var xx = '<tr><td>' + data[i].team + '</td><td>TODO</td><td>' + data[i].wins + '</td><td>' + data[i].draw + '</td><td>' + data[i].loss + '</td><td>' + (data[i].aHatch / data[i].played) + '</td><td>' + (data[i].aCargo/data[i].played) + '</td><td>' + (data[i].tHatch/data[i].played) + '</td><td>' + (data[i].tCargo/data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played) + '</td><td>TODO</td>'
+        $('#datTable').append(num);
+    }
+
+    sort.refresh();
 }
