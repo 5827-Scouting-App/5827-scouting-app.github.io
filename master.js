@@ -144,7 +144,7 @@ function refreshTable() {
         //
         //
 
-        var xx = '<tr><td>' + data[i].team + '</td><td>TODO</td><td>' + data[i].wins + '</td><td>' + data[i].draw + '</td><td>' + data[i].loss + '</td><td>' + (data[i].aHatch / data[i].played) + '</td><td>' + (data[i].aCargo/data[i].played) + '</td><td>' + (data[i].tHatch/data[i].played) + '</td><td>' + (data[i].tCargo/data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played) + '</td><td>TODO</td>'
+        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>TODO</td><td>' + data[i].wins + '</td><td>' + data[i].draw + '</td><td>' + data[i].loss + '</td><td>' + (data[i].aHatch / data[i].played) + '</td><td>' + (data[i].aCargo/data[i].played) + '</td><td>' + (data[i].tHatch/data[i].played) + '</td><td>' + (data[i].tCargo/data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played) + '</td><td>TODO</td>'
         $('#datTable').append(xx);
     }
     //sort = new Tablesort(document.getElementById('datTable'));
