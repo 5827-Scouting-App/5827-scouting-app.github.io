@@ -2,7 +2,7 @@ var data = [];
 var tData;
 function launchAddModal() {
     $('#addDataModal').toggleClass('is-active')
-    $('#success').innerHTML('');
+    $('#success').html('');
 
     var video = document.createElement("video");
     var canvasElement = document.getElementById("canvas");
@@ -34,7 +34,7 @@ function launchAddModal() {
             if (code) {
                 let tmp = JSON.parse(code.data);
                 tData = tmp;
-                $('#success').innerHTML('Found QR code! ' + code.data);
+                $('#success').html('Found QR code! ' + code.data);
             }
         }
         requestAnimationFrame(tick);
