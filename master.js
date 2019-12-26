@@ -2,6 +2,7 @@ var data = [];
 var tData;
 function launchAddModal() {
     $('#addDataModal').toggleClass('is-active')
+    $('#success').innerHTML('');
 
     var video = document.createElement("video");
     var canvasElement = document.getElementById("canvas");
@@ -33,6 +34,7 @@ function launchAddModal() {
             if (code) {
                 let tmp = JSON.parse(code.data);
                 tData = tmp;
+                $('#success').innerHTML('Found QR code! ' + code.data);
             }
         }
         requestAnimationFrame(tick);
@@ -44,7 +46,8 @@ function exportData() {
 }
 
 function importData() {
-    var team = tmp.teamNum;
+    var tmp = tData;
+    var team = tData.teamNum;
     var create = true;
     var index = -1;
     for (var i = 0; i < data.length; i++) {
@@ -117,6 +120,7 @@ function importData() {
             data[index].pCycles = tmp.cycles
         }
     }
+    $('#addDataModal').toggleClass('is-active')
     refreshTable();
 }
 
