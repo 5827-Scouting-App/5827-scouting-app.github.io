@@ -1,5 +1,6 @@
 var data = [];
 var tData;
+var stream1;
 var sort = new Tablesort(document.getElementById('datTable'));
 function launchAddModal() {
     $('#addDataModal').toggleClass('is-active')
@@ -18,7 +19,9 @@ function launchAddModal() {
         video.srcObject = stream;
         video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
         video.play();
+        stream1 = stream;
         requestAnimationFrame(tick);
+        
     });
 
     function tick() {
@@ -36,6 +39,10 @@ function launchAddModal() {
                 let tmp = JSON.parse(code.data);
                 tData = tmp;
                 $('#success').html('Found QR code! ' + code.data);
+
+                stream1.getTracks().forEach(function (track) {
+                    track.stop();
+                });
             }
         }
         requestAnimationFrame(tick);
@@ -138,13 +145,13 @@ function refreshTable() {
     $('#numTableBod').empty();
     $('#datTableBod').empty();
 
-    for(var i = 0; i < data.length; i++) {
-        var num = '<tr><td>' + (i+1) + '</td></tr>'
+    for (var i = 0; i < data.length; i++) {
+        var num = '<tr><td>' + (i + 1) + '</td></tr>'
         $('#numTable').append(num);
         //
         //
 
-        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>TODO</td><td>' + data[i].wins + '</td><td>' + data[i].draw + '</td><td>' + data[i].loss + '</td><td>' + (data[i].aHatch / data[i].played) + '</td><td>' + (data[i].aCargo/data[i].played) + '</td><td>' + (data[i].tHatch/data[i].played) + '</td><td>' + (data[i].tCargo/data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played) + '</td><td>TODO</td>'
+        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>TODO</td><td>' + data[i].wins + '</td><td>' + data[i].draw + '</td><td>' + data[i].loss + '</td><td>' + (data[i].aHatch / data[i].played) + '</td><td>' + (data[i].aCargo / data[i].played) + '</td><td>' + (data[i].tHatch / data[i].played) + '</td><td>' + (data[i].tCargo / data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played) + '</td><td>TODO</td>'
         $('#datTable').append(xx);
     }
     //sort = new Tablesort(document.getElementById('datTable'));

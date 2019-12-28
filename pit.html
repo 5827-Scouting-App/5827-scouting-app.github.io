@@ -13,94 +13,119 @@
 </head>
 
 <body class="has-navbar-fixed-top is-fullheight" style="">
-
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div class="navbar-start">
-            <a class="navbar-item" href="index.html">
-                &laquo; Back
-            </a>
-        </div>
-    </nav>
-    <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
-        <div style="padding: 10px; padding-top: 7%;" class="container is-fluid">
-            <p>Your name</p><input class="input" id="scoutName" placeholder="Anirudh" type="text"><br>
-            <p>Team Number</p><input class="input" id="teamNum" placeholder="5827" type="number"><br>
-            <p>Drive Train</p><input class="input" id="drivetrain" placeholder="West Coast" type="text"><br>
-            Predicted Hatch panels
-            <div class="field has-addons" style="padding:5px; width: 100%;">
-                <p class="control">
-                    <a class="button is-danger" onclick="sub('hatchNum')">-</a>
-                </p>
-                <p class="control">
-                    <input class="input" id="hatchNum" type="number" value="0">
-                </p>
-                <p class="control">
-                    <a class="button is-primary" onclick="add('hatchNum')">+</a>
-                </p>
+    <div class="has-navbar-fixed-top is-fullheight" id="pitPage">
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">
+                    &laquo; Back
+                </a>
             </div>
-            Predicted Cargo
-            <div class="field has-addons" style="padding:5px; width: 100%;">
-                <p class="control">
-                    <a class="button is-danger" onclick="sub('cargoNum')">-</a>
-                </p>
-                <p class="control">
-                    <input class="input" id="cargoNum" type="number" value="0">
-                </p>
-                <p class="control">
-                    <a class="button is-primary" onclick="add('cargoNum')">+</a>
-                </p>
+        </nav>
+        <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
+            <div style="padding: 10px; padding-top: 7%;" class="container is-fluid">
+                <p>Your name</p><input class="input" id="scoutName" placeholder="Anirudh" type="text"><br>
+                <p>Team Number</p><input class="input" id="teamNum" placeholder="5827" type="number"><br>
+                <p>Drive Train</p><input class="input" id="drivetrain" placeholder="West Coast" type="text"><br>
+                Autonomous Hatch panels
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('aHatchNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="aHatchNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('aHatchNum')">+</a>
+                    </p>
+                </div>
+                Predicted Hatch panels
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('hatchNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="hatchNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('hatchNum')">+</a>
+                    </p>
+                </div>
+                Predicted Cargo
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('cargoNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="cargoNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('cargoNum')">+</a>
+                    </p>
+                </div>
+                Predicted Climb
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('climbNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="climbNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('climbNum')">+</a>
+                    </p>
+                </div>
+                <br>
+                <br>
+                <a class="button is-info" id="export" type="button" onclick="qrify()">Export Data</a>
+                <br>
+                <br>
+                <div id="codes"></div>
+
+                Show this data to Kevin!
+                <br>
+                <a class="button is-danger" id="export" type="button" onclick="rmQueue()">Clear Queue</a>
             </div>
-            <br>
-            <br>
-            <a class="button is-info" id="export" type="button" onclick="qrify()">Export Data</a>
-            <br>
-            <br>
-            <div id="codes"></div>
-
-            Show this data to Kevin!
-            <br>
-            <a class="button is-danger" id="export" type="button" onclick="rmQueue()">Clear Queue</a>
-        </div>
-    </section>
+        </section>
 
 
-    <script type="text/javascript">
-        var n = 0;
-        function rmQueue() {
-            $("#codes").empty();
-        };
-        function qrify() {
-            var name = "qrcode" + n;
-            $('#codes').prepend('<div class="boorder"><h3>Team ' + document.getElementById("teamNum").value + '</h3><div id="' + name + '" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div></div><br>');
-            var qrcode = new QRCode(document.getElementById(name), {
-                width: 500,
-                height: 500
-            });
-            var exportObj = {
-                type: 1,
-                scoutName: document.getElementById("scoutName").value,
-                teamNum: document.getElementById("teamNum").value,
-                hatch: document.getElementById("hatchNum").value,
-                cargo: document.getElementById("cargoNum").value
+        <script type="text/javascript">
+            var n = 0;
+            function rmQueue() {
+                $("#codes").empty();
             };
-            qrcode.makeCode(JSON.stringify(exportObj));
-            n++;
-        }
-
-        function add(val) {
-            var x = document.getElementById(val);
-            x.value = parseInt(x.value) + 1;
-        }
-
-        function sub(val) {
-            var x = document.getElementById(val);
-            if (parseInt(x.value) - 1 < 0) {
-                x.value = 0;
-            } else {
-                x.value = parseInt(x.value) - 1;
+            function qrify() {
+                var name = "qrcode" + n;
+                $('#codes').prepend('<div class="boorder"><h3>Team ' + document.getElementById("teamNum").value + '</h3><div id="' + name + '" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div></div><br>');
+                var qrcode = new QRCode(document.getElementById(name), {
+                    width: 500,
+                    height: 500
+                });
+                var exportObj = {
+                    type: 1,
+                    scoutName: document.getElementById("scoutName").value,
+                    teamNum: document.getElementById("teamNum").value,
+                    hatch: document.getElementById("hatchNum").value,
+                    cargo: document.getElementById("cargoNum").value
+                };
+                qrcode.makeCode(JSON.stringify(exportObj));
+                n++;
             }
-        }
-    </script>
+
+            function add(val) {
+                var x = document.getElementById(val);
+                x.value = parseInt(x.value) + 1;
+            }
+
+            function sub(val) {
+                var x = document.getElementById(val);
+                if (parseInt(x.value) - 1 < 0) {
+                    x.value = 0;
+                } else {
+                    x.value = parseInt(x.value) - 1;
+                }
+            }
+        </script>
+    </div>
 </body>
 
 

@@ -14,79 +14,450 @@
     <link rel="stylesheet" href="style.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
+    <script src="res/jquery.min.js"></script>
+    <script type="text/javascript" src="res/qrcode.js"></script>
+    <script type="text/javascript" src="res/jsQR.js"></script>
+    <script type="text/javascript" src="res/tablesort.js"></script>
+    <script type="text/javascript" src="res/tablesort.number.js"></script>
+    <script type="text/javascript" src="res/instascan.min.js"></script>
+
     <script src="pwabuilder-sw.js"></script>
     <script src="app.js"></script>
+    
 </head>
 
 <body class="has-navbar-fixed-top">
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <!--<div class="navbar-start">
+    <div id="homePage">
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <!--<div class="navbar-start">
             <a class="navbar-item" href="#">
                 &laquo; Back
             </a>
         </div>-->
-        <div class="navbar-end">
-            <a class="navbar-item" href="#">
-                <img src="icon/logo.png" alt="CodePurple Scouting">
-            </a>
-        </div>
-    </nav>
+            <div class="navbar-end">
+                <a class="navbar-item" href="#">
+                    <img src="icon/logo.png" alt="CodePurple Scouting">
+                </a>
+            </div>
+        </nav>
 
-    <section class="hero is-light is-fullheight" style="background-color: rgb(127, 84, 152);">
-        <div class="hero-body">
-            <div class="container">
-                <div>
-                    <h1 class="title" style="color: white;">
-                        Code Purple Scouting
-                    </h1>
-                </div>
-                <br>
-                <br>
-                <div class="subtitle">
-                    <div style="padding: 5px;">
-                        <a class="button is-outlined is-light is-large is-fullwidth" style="padding: 30px;"
-                            href="export.html">
-                            <span>
-                                Match Scouting
-                            </span>
-                            <span class="icon is-large">
-                                <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
+        <section class="hero is-light is-fullheight" style="background-color: rgb(127, 84, 152);">
+            <div class="hero-body">
+                <div class="container">
+                    <div>
+                        <h1 class="title" style="color: white;">
+                            Code Purple Scouting
+                        </h1>
                     </div>
-                    <div style="padding: 5px;">
-                        <a class="button is-outlined is-light is-large" style="width: 100%; padding: 30px;" href="pit.html">
-                            <span>
-                                Pit Scouting
-                            </span>
-                            <span class="icon is-large">
-                                <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div style="padding: 5px;">
-                        <a class="button is-outlined is-light is-large" style="width: 100%; padding: 30px;"
-                            href="master.html">
-                            <span>
-                                Master
-                            </span>
-                            <span class="icon is-large">
-                                <i class="fas fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div style="padding: 5px;">
-                        <a class="button is-outlined is-light is-large" style="width: 100%; padding: 30px;"
-                            onclick="install()">
-                            <span class="icon is-large">
-                                <i class="fas fa-download"></i>
-                            </span>
-                        </a>
+                    <br>
+                    <br>
+                    <div class="subtitle">
+                        <div style="padding: 5px;">
+                            <a class="button is-outlined is-light is-large is-fullwidth" style="padding: 30px;"
+                                onclick="showExport()">
+                                <span>
+                                    Match Scouting
+                                </span>
+                                <span class="icon is-large">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div style="padding: 5px;">
+                            <a class="button is-outlined is-light is-large" style="width: 100%; padding: 30px;"
+                                onclick="showPit()">
+                                <span>
+                                    Pit Scouting
+                                </span>
+                                <span class="icon is-large">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div style="padding: 5px;">
+                            <a class="button is-outlined is-light is-large" style="width: 100%; padding: 30px;"
+                                onclick="showMaster()">
+                                <span>
+                                    Master
+                                </span>
+                                <span class="icon is-large">
+                                    <i class="fas fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div style="padding: 5px;">
+                            <a class="button is-outlined is-light is-large" style="width: 100%; padding: 30px;"
+                                onclick="install()">
+                                <span class="icon is-large">
+                                    <i class="fas fa-download"></i>
+                                </span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
+    </div>
+    <!--
+
+
+
+
+
+    -->
+    <div class="has-navbar-fixed-top is-fullheight" id="matchPage">
+
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-start">
+                <a class="navbar-item" onclick="goHome()">
+                    &laquo; Back
+                </a>
+            </div>
+        </nav>
+        <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
+            <div style="padding: 10px; padding-top: 7%;" class="container is-fluid">
+                <p>Your name</p><input class="input" id="scoutName" placeholder="Anirudh" type="text"><br>
+                <p>Team Number</p><input class="input" id="teamNum" placeholder="5827" type="number"><br>
+                Match Number<br>
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('matchNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="matchNum" type="number" value="1">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('matchNum')">+</a>
+                    </p>
+                </div>
+                Successful Hatch panels
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('hatchNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="hatchNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('hatchNum')">+</a>
+                    </p>
+                </div>
+                Dropped Hatch Panels
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('badHatchNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="badHatchNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('badHatchNum')">+</a>
+                    </p>
+                </div>
+                <br>
+                <br>
+                <a class="button is-info" id="export" type="button" onclick="qrify()">Export Data</a>
+                <br>
+                <br>
+                <div id="codes" class="container"></div>
+
+                Show this data to Kevin!
+                <br>
+                <a class="button is-danger" id="export" type="button" onclick="rmQueue()">Clear Queue</a>
+            </div>
+        </section>
+
+
+        <script type="text/javascript">
+            var n = 0;
+            function rmQueue() {
+                $("#codes").empty();
+            };
+            function qrify() {
+                var name = "qrcode" + n;
+                $('#codes').prepend('<div class="boorder"><h3>Match ' + document.getElementById("matchNum").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px"></div></div><br>');
+                var qrcode = new QRCode(document.getElementById(name), {
+                    width: 500,
+                    height: 500
+                });
+                var exportObj = {
+                    type: 0,
+                    scoutName: document.getElementById("scoutName").value,
+                    teamNum: document.getElementById("teamNum").value,
+                    matchNum: document.getElementById("matchNum").value,
+                    successfulHatch: document.getElementById("hatchNum").value,
+                    failedHatch: document.getElementById("badHatchNum").value
+                };
+                qrcode.makeCode(JSON.stringify(exportObj));
+                n++;
+            }
+
+            function add(val) {
+                var x = document.getElementById(val);
+                x.value = parseInt(x.value) + 1;
+            }
+
+            function sub(val) {
+                var x = document.getElementById(val);
+                if (parseInt(x.value) - 1 < 0) {
+                    x.value = 0;
+                } else {
+                    x.value = parseInt(x.value) - 1;
+                }
+            }
+        </script>
+    </div>
+    <!--
+
+
+
+
+
+
+    -->
+    <div class="has-navbar-fixed-top is-fullheight" id="pitPage">
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-start">
+                <a class="navbar-item" onclick="goHome()">
+                    &laquo; Back
+                </a>
+            </div>
+        </nav>
+        <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
+            <div style="padding: 10px; padding-top: 7%;" class="container is-fluid">
+                <p>Your name</p><input class="input" id="scoutName1" placeholder="Anirudh" type="text"><br>
+                <p>Team Number</p><input class="input" id="teamNum1" placeholder="5827" type="number"><br>
+                <p>Drive Train</p><input class="input" id="drivetrain1" placeholder="West Coast" type="text"><br>
+                Autonomous Hatch panels
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('aHatchNum1')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="aHatchNum1" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('aHatchNum1')">+</a>
+                    </p>
+                </div>
+                Predicted Hatch panels
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('hatchNum1')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="hatchNum1" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('hatchNum1')">+</a>
+                    </p>
+                </div>
+                Predicted Cargo
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('cargoNum1')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="cargoNum1" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('cargoNum1')">+</a>
+                    </p>
+                </div>
+                Predicted Climb
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('climbNum1')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="climbNum1" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('climbNum1')">+</a>
+                    </p>
+                </div>
+                <br>
+                <br>
+                <a class="button is-info" id="export" type="button" onclick="qrify1()">Export Data</a>
+                <br>
+                <br>
+                <div id="codes2"></div>
+
+                Show this data to Kevin!
+                <br>
+                <a class="button is-danger" id="export" type="button" onclick="rmQueue1()">Clear Queue</a>
+            </div>
+        </section>
+
+
+        <script type="text/javascript">
+            var n2 = 0;
+            function rmQueue1() {
+                $("#codes2").empty();
+            };
+            function qrify1() {
+                var name = "qrcode" + n2;
+                $('#codes2').prepend('<div class="boorder"><h3>Team ' + document.getElementById("teamNum").value + '</h3><div id="' + name + '" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div></div><br>');
+                var qrcode = new QRCode(document.getElementById(name), {
+                    width: 500,
+                    height: 500
+                });
+                var exportObj = {
+                    type: 1,
+                    scoutName: document.getElementById("scoutName1").value,
+                    teamNum: document.getElementById("teamNum1").value,
+                    hatch: document.getElementById("hatchNum1").value,
+                    cargo: document.getElementById("cargoNum1").value
+                };
+                qrcode.makeCode(JSON.stringify(exportObj));
+                n++;
+            }
+
+            function add(val) {
+                var x = document.getElementById(val);
+                x.value = parseInt(x.value) + 1;
+            }
+
+            function sub(val) {
+                var x = document.getElementById(val);
+                if (parseInt(x.value) - 1 < 0) {
+                    x.value = 0;
+                } else {
+                    x.value = parseInt(x.value) - 1;
+                }
+            }
+        </script>
+    </div>
+    <!--
+
+
+
+
+
+    -->
+    <div class="has-navbar-fixed-top is-fullheight" id="masterPage">
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-start">
+                <a class="navbar-item" onclick="goHome()">
+                    &laquo; Back
+                </a>
+            </div>
+        </nav>
+        <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
+            <div style="padding: 4%;">
+                <div class="columns">
+                    <div class="column is-11">
+                        <div class="title" style="color:white;">Dashboard</div>
+                    </div>
+                    <div class="column is-2">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <button class="button is-info" onclick="refreshTable()">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-sync"></i>
+                                    </span>
+                                </button>
+                            </p>
+                            <p class="control">
+                                <button class="button is-success" onclick="launchAddModal()">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span>
+                                        Add
+                                    </span>
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--TABLE-->
+                <div class="columns table-container">
+                    <table class="table is-striped" id="numTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="numTableBod">
+
+                        </tbody>
+                    </table>
+                    <table class="table is-fullwidth is-striped" id="datTable">
+                        <thead>
+                            <tr>
+                                <th data-sort-default>Team</th>
+                                <th><abbr title="Played">Pld</abbr></th>
+                                <th><abbr title="Broke Down">BD</abbr></th>
+                                <th><abbr title="Won">W</abbr></th>
+                                <th><abbr title="Drawn">D</abbr></th>
+                                <th><abbr title="Lost">L</abbr></th>
+                                <th><abbr title="Auton Hatches per Match">A H/m</abbr></th>
+                                <th><abbr title="Auton Cargo per Match">A C/m</abbr></th>
+                                <th><abbr title="Hatches per Match">H/m</abbr></th>
+                                <th><abbr title="Cargo per Match">C/m</abbr></th>
+                                <th><abbr title="Climb level">Climb</abbr></th>
+                                <th><abbr title="Climb Success Rate">Climb %</abbr></th>
+                                <th><abbr title="Average Points Per Game">aPPG</abbr></th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Team</th>
+                                <th><abbr title="Played">Pld</abbr></th>
+                                <th><abbr title="Broke Down">BD</abbr></th>
+                                <th><abbr title="Won">W</abbr></th>
+                                <th><abbr title="Drawn">D</abbr></th>
+                                <th><abbr title="Lost">L</abbr></th>
+                                <th><abbr title="Auton Hatches per Match">A H/m</abbr></th>
+                                <th><abbr title="Auton Cargo per Match">A C/m</abbr></th>
+                                <th><abbr title="Hatches per Match">H/m</abbr></th>
+                                <th><abbr title="Cargo per Match">C/m</abbr></th>
+                                <th><abbr title="Climb level">Climb</abbr></th>
+                                <th><abbr title="Climb Success Rate">Climb %</abbr></th>
+                                <th><abbr title="Average Points Per Game">aPPG</abbr></th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="datTableBod">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <script type="text/javascript" src="master.js"></script>
+
+
+        <!--MODALS-->
+
+        <!--Numero uno-->
+        <div class="modal" id="addDataModal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Add data</p>
+                    <button class="delete" aria-label="close" onclick="launchAddModal()"></button>
+                </header>
+                <section class="modal-card-body">
+                    <!-- Content ... -->
+                    <canvas id="canvas" height="480" width="640"></canvas>
+                    <p id="success"></p>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success" onclick="importData()">Save</button>
+                    <button class="button" onclick="launchAddModal()">Cancel</button>
+                </footer>
+            </div>
         </div>
-    </section>
+
+    </div>
 </body>
 
 

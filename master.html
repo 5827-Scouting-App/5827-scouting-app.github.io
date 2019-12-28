@@ -16,126 +16,129 @@
     <title>Master</title>
 </head>
 
-<body class="has-navbar-fixed-top is-fullheight">
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div class="navbar-start">
-            <a class="navbar-item" href="index.html">
-                &laquo; Back
-            </a>
-        </div>
-    </nav>
-    <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
-        <div style="padding: 4%;">
-            <div class="columns">
-                <div class="column is-11">
-                    <div class="title" style="color:white;">Dashboard</div>
-                </div>
-                <div class="column is-2">
-                    <div class="field has-addons">
-                        <p class="control">
-                            <button class="button is-info" onclick="refreshTable()">
-                                <span class="icon is-small">
-                                    <i class="fas fa-sync"></i>
-                                </span>
-                            </button>
-                        </p>
-                        <p class="control">
-                            <button class="button is-success" onclick="launchAddModal()">
-                                <span class="icon is-small">
-                                    <i class="fas fa-plus"></i>
-                                </span>
-                                <span>
-                                    Add
-                                </span>
-                            </button>
-                        </p>
+<body>
+    <div class="has-navbar-fixed-top is-fullheight" id="masterPage">
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">
+                    &laquo; Back
+                </a>
+            </div>
+        </nav>
+        <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
+            <div style="padding: 4%;">
+                <div class="columns">
+                    <div class="column is-11">
+                        <div class="title" style="color:white;">Dashboard</div>
+                    </div>
+                    <div class="column is-2">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <button class="button is-info" onclick="refreshTable()">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-sync"></i>
+                                    </span>
+                                </button>
+                            </p>
+                            <p class="control">
+                                <button class="button is-success" onclick="launchAddModal()">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span>
+                                        Add
+                                    </span>
+                                </button>
+                            </p>
+                        </div>
                     </div>
                 </div>
+
+
+                <!--TABLE-->
+                <div class="columns table-container">
+                    <table class="table is-striped" id="numTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="numTableBod">
+
+                        </tbody>
+                    </table>
+                    <table class="table is-fullwidth is-striped" id="datTable">
+                        <thead>
+                            <tr>
+                                <th data-sort-default>Team</th>
+                                <th><abbr title="Played">Pld</abbr></th>
+                                <th><abbr title="Broke Down">BD</abbr></th>
+                                <th><abbr title="Won">W</abbr></th>
+                                <th><abbr title="Drawn">D</abbr></th>
+                                <th><abbr title="Lost">L</abbr></th>
+                                <th><abbr title="Auton Hatches per Match">A H/m</abbr></th>
+                                <th><abbr title="Auton Cargo per Match">A C/m</abbr></th>
+                                <th><abbr title="Hatches per Match">H/m</abbr></th>
+                                <th><abbr title="Cargo per Match">C/m</abbr></th>
+                                <th><abbr title="Climb level">Climb</abbr></th>
+                                <th><abbr title="Climb Success Rate">Climb %</abbr></th>
+                                <th><abbr title="Average Points Per Game">aPPG</abbr></th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Team</th>
+                                <th><abbr title="Played">Pld</abbr></th>
+                                <th><abbr title="Broke Down">BD</abbr></th>
+                                <th><abbr title="Won">W</abbr></th>
+                                <th><abbr title="Drawn">D</abbr></th>
+                                <th><abbr title="Lost">L</abbr></th>
+                                <th><abbr title="Auton Hatches per Match">A H/m</abbr></th>
+                                <th><abbr title="Auton Cargo per Match">A C/m</abbr></th>
+                                <th><abbr title="Hatches per Match">H/m</abbr></th>
+                                <th><abbr title="Cargo per Match">C/m</abbr></th>
+                                <th><abbr title="Climb level">Climb</abbr></th>
+                                <th><abbr title="Climb Success Rate">Climb %</abbr></th>
+                                <th><abbr title="Average Points Per Game">aPPG</abbr></th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="datTableBod">
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </section>
+
+        <script type="text/javascript" src="master.js"></script>
 
 
-            <!--TABLE-->
-            <div class="columns table-container">
-                <table class="table is-striped" id="numTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>#</th>
-                        </tr>
-                    </tfoot>
-                    <tbody id="numTableBod">
+        <!--MODALS-->
 
-                    </tbody>
-                </table>
-                <table class="table is-fullwidth is-striped" id="datTable">
-                    <thead>
-                        <tr>
-                            <th data-sort-default>Team</th>
-                            <th><abbr title="Played">Pld</abbr></th>
-                            <th><abbr title="Broke Down">BD</abbr></th>
-                            <th><abbr title="Won">W</abbr></th>
-                            <th><abbr title="Drawn">D</abbr></th>
-                            <th><abbr title="Lost">L</abbr></th>
-                            <th><abbr title="Auton Hatches per Match">A H/m</abbr></th>
-                            <th><abbr title="Auton Cargo per Match">A C/m</abbr></th>
-                            <th><abbr title="Hatches per Match">H/m</abbr></th>
-                            <th><abbr title="Cargo per Match">C/m</abbr></th>
-                            <th><abbr title="Climb level">Climb</abbr></th>
-                            <th><abbr title="Climb Success Rate">Climb %</abbr></th>
-                            <th><abbr title="Average Points Per Game">aPPG</abbr></th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Team</th>
-                            <th><abbr title="Played">Pld</abbr></th>
-                            <th><abbr title="Broke Down">BD</abbr></th>
-                            <th><abbr title="Won">W</abbr></th>
-                            <th><abbr title="Drawn">D</abbr></th>
-                            <th><abbr title="Lost">L</abbr></th>
-                            <th><abbr title="Auton Hatches per Match">A H/m</abbr></th>
-                            <th><abbr title="Auton Cargo per Match">A C/m</abbr></th>
-                            <th><abbr title="Hatches per Match">H/m</abbr></th>
-                            <th><abbr title="Cargo per Match">C/m</abbr></th>
-                            <th><abbr title="Climb level">Climb</abbr></th>
-                            <th><abbr title="Climb Success Rate">Climb %</abbr></th>
-                            <th><abbr title="Average Points Per Game">aPPG</abbr></th>
-                        </tr>
-                    </tfoot>
-                    <tbody id="datTableBod">
-                    </tbody>
-                </table>
+        <!--Numero uno-->
+        <div class="modal" id="addDataModal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Add data</p>
+                    <button class="delete" aria-label="close" onclick="launchAddModal()"></button>
+                </header>
+                <section class="modal-card-body">
+                    <!-- Content ... -->
+                    <canvas id="canvas" height="480" width="640"></canvas>
+                    <p id="success"></p>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success" onclick="importData()">Save</button>
+                    <button class="button" onclick="launchAddModal()">Cancel</button>
+                </footer>
             </div>
         </div>
-    </section>
 
-    <script type="text/javascript" src="master.js"></script>
-
-
-    <!--MODALS-->
-
-    <!--Numero uno-->
-    <div class="modal" id="addDataModal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Add data</p>
-                <button class="delete" aria-label="close" onclick="launchAddModal()"></button>
-            </header>
-            <section class="modal-card-body">
-                <!-- Content ... -->
-                <canvas id="canvas" height="480" width="640"></canvas>
-                <p id="success"></p>
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button is-success" onclick="importData()">Save</button>
-                <button class="button" onclick="launchAddModal()">Cancel</button>
-            </footer>
-        </div>
     </div>
 </body>
 
