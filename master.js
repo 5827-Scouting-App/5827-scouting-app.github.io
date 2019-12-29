@@ -100,7 +100,8 @@ function importData() {
             draw: 0,
             loss: 0,
             aClimbs: [],
-            didClimb: 0
+            didClimb: 0,
+            bd: 0
         }
         if (tmp.type == 0) {
             obj.played++;

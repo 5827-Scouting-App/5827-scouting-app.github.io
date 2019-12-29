@@ -23,7 +23,7 @@
 
     <script src="pwabuilder-sw.js"></script>
     <script src="app.js"></script>
-    
+
 </head>
 
 <body class="has-navbar-fixed-top">
@@ -85,7 +85,7 @@
                                 </span>
                             </a>
                         </div>
-                        <div style="padding: 5px;">
+                        <div style="padding: 5px;" id="dwnld">
                             <a class="button is-outlined is-light is-large" style="width: 100%; padding: 30px;"
                                 onclick="install()">
                                 <span class="icon is-large">
@@ -124,7 +124,7 @@
                         <a class="button is-danger" onclick="sub('matchNum')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="matchNum" type="number" value="1">
+                        <input class="input" id="matchNum" value="1">
                     </p>
                     <p class="control">
                         <a class="button is-primary" onclick="add('matchNum')">+</a>
@@ -152,6 +152,30 @@
                     </p>
                     <p class="control">
                         <a class="button is-primary" onclick="add('badHatchNum')">+</a>
+                    </p>
+                </div>
+                Successful Cargo
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('cargoNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="cargoNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('badHatchNum')">+</a>
+                    </p>
+                </div>
+                Dropped Cargo
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('badCargoNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="badCargoNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('badCargoNum')">+</a>
                     </p>
                 </div>
                 <br>
