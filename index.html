@@ -249,8 +249,8 @@
                 var name = "qrcode" + n;
                 $('#codes').prepend('<div class="boorder"><h3>Match ' + document.getElementById("matchNum").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px; padding: 10%;"></div></div><br>');
                 var qrcode = new QRCode(document.getElementById(name), {
-                    width: 500,
-                    height: 500
+                    width: 400,
+                    height: 400
                 });
                 var r = 0;
                 var radios = document.getElementsByName('answer');
@@ -413,8 +413,8 @@
                 var name = "qrcode" + n2;
                 $('#codes2').prepend('<div class="boorder"><h3>Team ' + document.getElementById("teamNum1").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px; padding: 10%;"></div></div><br>');
                 var qrcode = new QRCode(document.getElementById(name), {
-                    width: 500,
-                    height: 500
+                    width: 400,
+                    height: 400
                 });
                 var exportObj = {
                     type: 1,

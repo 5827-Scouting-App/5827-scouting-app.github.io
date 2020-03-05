@@ -127,11 +127,22 @@ function importData() {
             obj.played++;
             obj.mScouts.push(tmp.scoutName)
             obj.matches.push(tmp.matchNum)
-            obj.tAccBall += tmp.successfulAccBall
-            obj.tHighBall += tmp.successfulHighBall
-            obj.fAccBall += tmp.failedAccBall
-            obj.fHighBall += tmp.failedHighBall
-            obj.tCycles += tmp.cycles
+            obj.tHighBall = tmp.sHighBall
+            obj.tLowBall = tmp.sLowBall
+            obj.aHighBall = tmp.aHighBall
+            obj.aLowBall = tmp.aLowBall
+            obj.aClimbs.push(tmp.climb);
+            obj.tCycles = ((obj.tLowBall + obj.tHighBall) / 5) / obj.played;
+            if (tmp.climb > 2) {
+                obj.didClimb++
+            }
+            if (tmp.win == 1) {
+                obj.draw++;
+            } else if (tmp.win == 2) {
+                obj.wins++;
+            } else {
+                obj.loss++;
+            }
         } else {
             obj.pScouts.push(tmp.scoutName)
             obj.drivetrain = tmp.drivetrain
@@ -142,7 +153,6 @@ function importData() {
             obj.notes.push(tmp.regNotes)
             obj.autoNotes.push(tmp.autoDescruption)
             obj.controlwheel = tmp.controlwheel
-
         }
         data.push(obj)
     } else {
@@ -159,18 +169,23 @@ function importData() {
             if (tmp.climb > 2) {
                 data[index].didClimb++
             }
-            if (tmp.win == 0) {
-                data[index].loss++;
-            } else if (tmp.win == 1) {
+            if (tmp.win == 1) {
                 data[index].draw++;
             } else if (tmp.win == 2) {
                 data[index].wins++;
+            } else {
+                data[index].loss++;
             }
         } else {
             data[index].pScouts.push(tmp.scoutName)
-            data[index].pAccBall = tmp.AccBall
-            data[index].pHighBall = tmp.HighBall
-            data[index].pCycles = tmp.cycles
+            data[index].drivetrain = tmp.drivetrain
+            data[index].highBall = tmp.ballTarget
+            data[index].canClimb = tmp.p_climb
+            data[index].pCycles = tmp.p_cycles
+            data[index].pAccuracy = tmp.p_accuracy
+            data[index].notes.push(tmp.regNotes)
+            data[index].autoNotes.push(tmp.autoDescruption)
+            data[index].controlwheel = tmp.controlwheel
         }
     }
     $('#addDataModal').toggleClass('is-active')
@@ -197,7 +212,7 @@ function refreshTable() {
         //
         //
 
-        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>-</td><td>' + data[i].wins + '/' + data[i].draw + '/' + data[i].loss + '</td><td>' + (data[i].aHighBall / data[i].played) + '</td><td>' + (data[i].aLowBall / data[i].played) + '</td><td>' + (data[i].tHighBall / data[i].played) + '</td><td>' + (data[i].tLowBall / data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played) + '</td><td>-</td>'
+        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>-</td><td>' + data[i].wins + '/' + data[i].draw + '/' + data[i].loss + '</td><td>' + (data[i].aHighBall / data[i].played) + '</td><td>' + (data[i].aLowBall / data[i].played) + '</td><td>' + (data[i].tHighBall / data[i].played) + '</td><td>' + (data[i].tLowBall / data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played)*100 + '%</td><td>-</td>'
         $('#datTable').append(xx);
     }
     //sort = new Tablesort(document.getElementById('datTable'));
@@ -232,7 +247,7 @@ function getTeams() {
             }
         }
         var tmp = data[index];
-        var str = "<div class='column'><table class='table is-striped' style='border-width:1px'><tr><th colspan='2'><strong>" + list[i] + "</strong></th></tr><tr><td>W/D/L</td><td>" + tmp.wins + '/' + tmp.draw + '/' + tmp.loss  + "</td></tr><tr><td>PCycles</td><td></td></tr><tr><td>AH/m</td><td></td></tr><tr><td>AL/m</td><td></td></tr><tr><td>H/m</td><td></td></tr><tr><td>L/m</td><td></td></tr><tr><td>Climb%</td><td></td></tr><tr><td>Notes</td><td></td></tr></table></div>"
+        var str = "<div class='column'><table class='table is-striped' style='border-width:1px'><tr><th colspan='2'><strong>" + list[i] + "</strong></th></tr><tr><td>W/D/L</td><td>" + tmp.wins + '/' + tmp.draw + '/' + tmp.loss + "</td></tr><tr><td>PCycles</td><td></td></tr><tr><td>AH/m</td><td></td></tr><tr><td>AL/m</td><td></td></tr><tr><td>H/m</td><td></td></tr><tr><td>L/m</td><td></td></tr><tr><td>Climb%</td><td></td></tr><tr><td>Notes</td><td></td></tr></table></div>"
         $('#teamList').append(str);
     }
 }
