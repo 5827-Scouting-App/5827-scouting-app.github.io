@@ -212,7 +212,7 @@ function refreshTable() {
         //
         //
 
-        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>-</td><td>' + data[i].wins + '/' + data[i].draw + '/' + data[i].loss + '</td><td>' + (data[i].aHighBall / data[i].played) + '</td><td>' + (data[i].aLowBall / data[i].played) + '</td><td>' + (data[i].tHighBall / data[i].played) + '</td><td>' + (data[i].tLowBall / data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played)*100 + '%</td><td>-</td>'
+        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>-</td><td>' + data[i].wins + '/' + data[i].draw + '/' + data[i].loss + '</td><td>' + (data[i].aHighBall / data[i].played) + '</td><td>' + (data[i].aLowBall / data[i].played) + '</td><td>' + (data[i].tHighBall / data[i].played) + '</td><td>' + (data[i].tLowBall / data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played)*100 + '%</td><td>'+ () +'</td>'
         $('#datTable').append(xx);
     }
     //sort = new Tablesort(document.getElementById('datTable'));
