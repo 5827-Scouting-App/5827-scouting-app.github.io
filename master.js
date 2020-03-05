@@ -1,4 +1,5 @@
 var data = [];
+var usedKeys = [];
 var tData;
 var stream1;
 var sort = new Tablesort(document.getElementById('datTable'));
@@ -55,6 +56,9 @@ function exportData() {
 
 function importData() {
     var tmp = tData;
+    if(usedKeys.includes(tmp.key)) {
+        alert("Data has already been entered!")
+    }
     var team = tData.teamNum;
     var create = true;
     var index = -1;
@@ -71,26 +75,32 @@ function importData() {
     {
         team: 1111,
         drivetrain: "",
-        pHatch: 0,
-        pCargo: 0,
+        pAccBall: 0,
+        pHighBall: 0,
         played: 12,
-        tHatch: 132,
-        tCargo: 110,
+        tAccBall: 132,
+        tHighBall: 110,
     }                
     */
     if (create) {
         var obj = {
             team: tmp.teamNum,
             drivetrain: "",
-            pHatch: 0,
-            pCargo: 0,
+            pAccBall: 0,
+            weight: 0,
+            pHighBall: 0,
+            pLowBall: 0,
+            pClimb: false,
             played: 0,
-            tHatch: 0,
-            tCargo: 0,
-            fHatch: 0,
-            fCargo: 0,
-            aHatch: 0,
-            aCargo: 0,
+            tAccBall: 0,
+            tHighBall: 0,
+            tLowBall: 0,
+            fAccBall: 0,
+            fHighBall: 0,
+            fLowBall: 0,
+            aAccBall: 0,
+            aHighBall: 0,
+            aLowBall: 0,
             pCycles: 0,
             tCycles: 0,
             matches: [],
@@ -101,22 +111,34 @@ function importData() {
             loss: 0,
             aClimbs: [],
             didClimb: 0,
-            bd: 0
+            canClimb: -1,
+            bd: 0,
+            autoNotes: [],
+            notes: [],
+            highBall: -1,
+            pAccuracy: 0,
+            controlwheel: -1
         }
         if (tmp.type == 0) {
             obj.played++;
             obj.mScouts.push(tmp.scoutName)
             obj.matches.push(tmp.matchNum)
-            obj.tHatch += tmp.successfulHatch
-            obj.tCargo += tmp.successfulCargo
-            obj.fHatch += tmp.failedHatch
-            obj.fCargo += tmp.failedCargo
+            obj.tAccBall += tmp.successfulAccBall
+            obj.tHighBall += tmp.successfulHighBall
+            obj.fAccBall += tmp.failedAccBall
+            obj.fHighBall += tmp.failedHighBall
             obj.tCycles += tmp.cycles
         } else {
             obj.pScouts.push(tmp.scoutName)
-            obj.pHatch = tmp.hatch
-            obj.pCargo = tmp.cargo
-            obj.pCycles = tmp.cycles
+            obj.drivetrain = tmp.drivetrain
+            obj.highBall = tmp.ballTarget
+            obj.canClimb = tmp.p_climb
+            obj.pCycles = tmp.p_cycles
+            obj.pAccuracy = tmp.p_accuracy
+            obj.notes.push(tmp.regNotes)
+            obj.autoNotes.push(tmp.autoDescruption)
+            obj.controlwheel = tmp.controlwheel
+            
         }
         data.push(obj)
     } else {
@@ -124,15 +146,26 @@ function importData() {
             data[index].played++;
             data[index].mScouts.push(tmp.scoutName)
             data[index].matches.push(tmp.matchNum)
-            data[index].tHatch += tmp.successfulHatch
-            data[index].tCargo += tmp.successfulCargo
-            data[index].fHatch += tmp.failedHatch
-            data[index].fCargo += tmp.failedCargo
-            data[index].tCycles += tmp.cycles
+            data[index].tHighBall += tmp.sHighBall
+            data[index].aHighBall += tmp.aHighBall
+            data[index].tLowBall += tmp.sLowBall
+            data[index].aLowBall += tmp.aLowBall
+            data[index].aClimbs.push(tmp.climb);
+            data[index].tCycles = ((data[index].tLowBall + data[index].tHighBall)/5)/data[index].played;
+            if(tmp.climb > 2) {
+                data[index].didClimb++
+            }
+            if(tmp.win == 0) {
+                data[index].loss++;
+            } else if(tmp.win == 1) {
+                data[index].draw++;
+            } else if(tmp.win == 2) {
+                data[index].wins++;
+            }
         } else {
             data[index].pScouts.push(tmp.scoutName)
-            data[index].pHatch = tmp.hatch
-            data[index].pCargo = tmp.cargo
+            data[index].pAccBall = tmp.AccBall
+            data[index].pHighBall = tmp.HighBall
             data[index].pCycles = tmp.cycles
         }
     }
@@ -152,9 +185,22 @@ function refreshTable() {
         //
         //
 
-        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>TODO</td><td>' + data[i].wins + '</td><td>' + data[i].draw + '</td><td>' + data[i].loss + '</td><td>' + (data[i].aHatch / data[i].played) + '</td><td>' + (data[i].aCargo / data[i].played) + '</td><td>' + (data[i].tHatch / data[i].played) + '</td><td>' + (data[i].tCargo / data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played) + '</td><td>TODO</td>'
+        var xx = '<tr><td>' + data[i].team + '</td><td>' + data[i].played + '</td><td>-</td><td>' + data[i].wins + '/' + data[i].draw + '/' + data[i].loss + '</td><td>' + (data[i].aHighBall / data[i].played) + '</td><td>' + (data[i].aLowBall / data[i].played) + '</td><td>' + (data[i].tHighBall / data[i].played) + '</td><td>' + (data[i].tLowBall / data[i].played) + '</td><td>' + data[i].aClimbs.toString() + '</td><td>' + (data[i].didClimb / data[i].played) + '</td><td>-</td>'
         $('#datTable').append(xx);
     }
     //sort = new Tablesort(document.getElementById('datTable'));
     sort.refresh();
+}
+
+function download() {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)));
+    element.setAttribute('download', "data.txt");
+    
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    
+    element.click();
+    
+    document.body.removeChild(element);
 }

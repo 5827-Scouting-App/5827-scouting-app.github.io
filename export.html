@@ -24,7 +24,7 @@
         </nav>
         <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
             <div style="padding: 10px; padding-top: 7%;" class="container is-fluid">
-                <p>Your name</p><input class="input" id="scoutName" placeholder="Anirudh" type="text"><br>
+                <p>Your name</p><input class="input" id="scoutName" placeholder="Gordon" type="text"><br>
                 <p>Team Number</p><input class="input" id="teamNum" placeholder="5827" type="number"><br>
                 Match Number<br>
                 <div class="field has-addons" style="padding:5px; width: 100%;">
@@ -38,29 +38,72 @@
                         <a class="button is-primary" onclick="add('matchNum')">+</a>
                     </p>
                 </div>
-                Successful Hatch panels
+                <br>
+                <strong style="color: white">Ball Game</strong><br>
+
+                Successful High Shots
                 <div class="field has-addons" style="padding:5px; width: 100%;">
                     <p class="control">
-                        <a class="button is-danger" onclick="sub('hatchNum')">-</a>
+                        <a class="button is-danger" onclick="sub('HighNum')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="hatchNum" type="number" value="0">
+                        <input class="input" id="HighNum" type="number" value="0">
                     </p>
                     <p class="control">
-                        <a class="button is-primary" onclick="add('hatchNum')">+</a>
+                        <a class="button is-primary" onclick="add('HighNum')">+</a>
                     </p>
                 </div>
-                Dropped Hatch Panels
+                Dropped High shots
                 <div class="field has-addons" style="padding:5px; width: 100%;">
                     <p class="control">
-                        <a class="button is-danger" onclick="sub('badHatchNum')">-</a>
+                        <a class="button is-danger" onclick="sub('badHighBallNum')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="badHatchNum" type="number" value="0">
+                        <input class="input" id="badHighBallNum" type="number" value="0">
                     </p>
                     <p class="control">
-                        <a class="button is-primary" onclick="add('badHatchNum')">+</a>
+                        <a class="button is-primary" onclick="add('badHighBallNum')">+</a>
                     </p>
+                </div>
+
+                Successful Low Shots
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('LowNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="LowNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('LowNum')">+</a>
+                    </p>
+                </div>
+                Dropped Low shots
+                <div class="field has-addons" style="padding:5px; width: 100%;">
+                    <p class="control">
+                        <a class="button is-danger" onclick="sub('badLowNum')">-</a>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="badLowNum" type="number" value="0">
+                    </p>
+                    <p class="control">
+                        <a class="button is-primary" onclick="add('badLowNum')">+</a>
+                    </p>
+                </div>
+                <br>
+                <strong style="color: white;">Control Panel</strong>
+                <br>
+                <strong style="color: white;">Climbing</strong>
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" name="answer"> Parked
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="answer"> Attempted
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="answer"> Successful
+                    </label>
                 </div>
                 <br>
                 <br>
@@ -83,18 +126,31 @@
             };
             function qrify() {
                 var name = "qrcode" + n;
-                $('#codes').prepend('<div class="boorder"><h3>Match ' + document.getElementById("matchNum").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px"></div></div><br>');
+                $('#codes').prepend('<div class="boorder"><h3>Match ' + document.getElementById("matchNum").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px; padding: 10px;"></div></div><br>');
                 var qrcode = new QRCode(document.getElementById(name), {
                     width: 500,
                     height: 500
                 });
+                var r = -1;
+                var radios = document.getElementsByName('answer');
+                for(var i = 0; i < radios.length; i++) {
+                    if(radios[i].checked) {
+                        r = i+1;
+                        break;
+                    }
+                }
                 var exportObj = {
                     type: 0,
                     scoutName: document.getElementById("scoutName").value,
                     teamNum: document.getElementById("teamNum").value,
                     matchNum: document.getElementById("matchNum").value,
-                    successfulHatch: document.getElementById("hatchNum").value,
-                    failedHatch: document.getElementById("badHatchNum").value
+                    successfulAccBall: document.getElementById("AccBallNum").value,
+                    failedAccBall: document.getElementById("badAccBallNum").value,
+                    sHighBall: document.getElementById("HighNum"),
+                    fHighBall: document.getElementById("badHighBallNum"),
+                    sLowBall: document.getElementById("LowNum"),
+                    fLowBall: document.getElementById("badLowNum"),
+                    climb: r
                 };
                 qrcode.makeCode(JSON.stringify(exportObj));
                 n++;

@@ -24,6 +24,13 @@
     <script src="pwabuilder-sw.js"></script>
     <script src="app.js"></script>
 
+    <style>
+        select {
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+
 </head>
 
 <body class="has-navbar-fixed-top">
@@ -109,14 +116,14 @@
 
         <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
             <div class="navbar-start">
-                <a class="navbar-item" onclick="goHome()">
+                <a class="navbar-item" href="index.html">
                     &laquo; Back
                 </a>
             </div>
         </nav>
         <section class="hero is-fullheight" style="background-color: rgb(127, 84, 152); color: white;">
             <div style="padding: 10px; padding-top: 7%;" class="container is-fluid">
-                <p>Your name</p><input class="input" id="scoutName" placeholder="Anirudh" type="text"><br>
+                <p>Your name</p><input class="input" id="scoutName" placeholder="Gordon" type="text"><br>
                 <p>Team Number</p><input class="input" id="teamNum" placeholder="5827" type="number"><br>
                 Match Number<br>
                 <div class="field has-addons" style="padding:5px; width: 100%;">
@@ -124,60 +131,101 @@
                         <a class="button is-danger" onclick="sub('matchNum')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="matchNum" value="1">
+                        <input class="input" id="matchNum" type="number" value="1">
                     </p>
                     <p class="control">
                         <a class="button is-primary" onclick="add('matchNum')">+</a>
                     </p>
                 </div>
-                Successful Hatch panels
+                <br>
+                <strong style="color: white">Autonomous</strong><br>
+
+                AUTONOMOUS Successful High Shots
                 <div class="field has-addons" style="padding:5px; width: 100%;">
                     <p class="control">
-                        <a class="button is-danger" onclick="sub('hatchNum')">-</a>
+                        <a class="button is-danger" onclick="sub('aHighNum')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="hatchNum" type="number" value="0">
+                        <input class="input" id="aHighNum" type="number" value="0">
                     </p>
                     <p class="control">
-                        <a class="button is-primary" onclick="add('hatchNum')">+</a>
+                        <a class="button is-primary" onclick="add('aHighNum')">+</a>
                     </p>
                 </div>
-                Dropped Hatch Panels
+
+
+                AUTONOMOUS Successful Low Shots
                 <div class="field has-addons" style="padding:5px; width: 100%;">
                     <p class="control">
-                        <a class="button is-danger" onclick="sub('badHatchNum')">-</a>
+                        <a class="button is-danger" onclick="sub('aLowNum')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="badHatchNum" type="number" value="0">
+                        <input class="input" id="aLowNum" type="number" value="0">
                     </p>
                     <p class="control">
-                        <a class="button is-primary" onclick="add('badHatchNum')">+</a>
+                        <a class="button is-primary" onclick="add('aLowNum')">+</a>
                     </p>
                 </div>
-                Successful Cargo
+
+                <br>
+                <strong style="color: white">Ball Game</strong><br>
+
+
+                Successful High Shots
                 <div class="field has-addons" style="padding:5px; width: 100%;">
                     <p class="control">
-                        <a class="button is-danger" onclick="sub('cargoNum')">-</a>
+                        <a class="button is-danger" onclick="sub('HighNum')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="cargoNum" type="number" value="0">
+                        <input class="input" id="HighNum" type="number" value="0">
                     </p>
                     <p class="control">
-                        <a class="button is-primary" onclick="add('badHatchNum')">+</a>
+                        <a class="button is-primary" onclick="add('HighNum')">+</a>
                     </p>
                 </div>
-                Dropped Cargo
+
+
+                Successful Low Shots
                 <div class="field has-addons" style="padding:5px; width: 100%;">
                     <p class="control">
-                        <a class="button is-danger" onclick="sub('badCargoNum')">-</a>
+                        <a class="button is-danger" onclick="sub('LowNum')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="badCargoNum" type="number" value="0">
+                        <input class="input" id="LowNum" type="number" value="0">
                     </p>
                     <p class="control">
-                        <a class="button is-primary" onclick="add('badCargoNum')">+</a>
+                        <a class="button is-primary" onclick="add('LowNum')">+</a>
                     </p>
                 </div>
+
+                <br>
+                <strong style="color: white;">Climbing</strong>
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" value="0" name="answer"> Did not try
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="1" name="answer"> Parked
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="2" name="answer"> Attempted
+                    </label>
+                    <label class="radio">
+                        <input type="radio" value="3" name="answer"> Successful
+                    </label>
+                </div>
+
+                <p><label for="outcome">Match Outcome</label></p>
+                <select id="outcome">
+                    <option value="0">Loss</option>
+                    <option value="1">Draw</option>
+                    <option value="2">Win</option>
+                </select>
+
+                <br>
+                Notes
+                <br>
+                <textarea id="notes"></textarea>
                 <br>
                 <br>
                 <a class="button is-info" id="export" type="button" onclick="qrify()">Export Data</a>
@@ -199,18 +247,30 @@
             };
             function qrify() {
                 var name = "qrcode" + n;
-                $('#codes').prepend('<div class="boorder"><h3>Match ' + document.getElementById("matchNum").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px"></div></div><br>');
+                $('#codes').prepend('<div class="boorder"><h3>Match ' + document.getElementById("matchNum").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px; padding: 10%;"></div></div><br>');
                 var qrcode = new QRCode(document.getElementById(name), {
                     width: 500,
                     height: 500
                 });
+                var r = 0;
+                var radios = document.getElementsByName('answer');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        r = radios[i].value;
+                    }
+                }
                 var exportObj = {
                     type: 0,
                     scoutName: document.getElementById("scoutName").value,
                     teamNum: document.getElementById("teamNum").value,
                     matchNum: document.getElementById("matchNum").value,
-                    successfulHatch: document.getElementById("hatchNum").value,
-                    failedHatch: document.getElementById("badHatchNum").value
+                    aHighBall: document.getElementById("aHighNum").value,
+                    aLowBall: document.getElementById("aLowBall").value,
+                    sHighBall: document.getElementById("HighNum").value,
+                    sLowBall: document.getElementById("LowNum").value,
+                    climb: r,
+                    win: document.getElementById("outcome").options[document.getElementById("outcome").selectedIndex].value,
+                    key: document.getElementById("scoutName").value + '' + Math.floor(Math.random() * Math.floor(1000000000))
                 };
                 qrcode.makeCode(JSON.stringify(exportObj));
                 n++;
@@ -251,32 +311,48 @@
             <div style="padding: 10px; padding-top: 7%;" class="container is-fluid">
                 <p>Your name</p><input class="input" id="scoutName1" placeholder="Anirudh" type="text"><br>
                 <p>Team Number</p><input class="input" id="teamNum1" placeholder="5827" type="number"><br>
-                <p>Drive Train</p><input class="input" id="drivetrain1" placeholder="West Coast" type="text"><br>
-                Autonomous Hatch panels
+
+                <p><label for="drivetrain">Drivetrain (What's their drivetrain?)</label></p>
+                <select id="drivetrain">
+                    <option value="West Coast">West Coast</option>
+                    <option value="Swerve">Swerve</option>
+                    <option value="Meccanum">Meccanum</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <p><label for="shooting">High goal or Low goal?</label></p>
+                <select id="shooting">
+                    <option value="0">None</option>
+                    <option value="1">Low</option>
+                    <option value="2">High</option>
+                    <option value="3">Both</option>
+                </select>
+                <br>
+                <br>
+
+                Autonomous Notes (How many balls? High or low?)
+                <br>
+                <textarea id="autoNotes"></textarea>
+
+                <br>
+                <br>
+
+
+                Predicted accuracy (How many out of 5 balls makes it in?)
                 <div class="field has-addons" style="padding:5px; width: 100%;">
                     <p class="control">
-                        <a class="button is-danger" onclick="sub('aHatchNum1')">-</a>
+                        <a class="button is-danger" onclick="sub('accuracy')">-</a>
                     </p>
                     <p class="control">
-                        <input class="input" id="aHatchNum1" value="0">
+                        <input class="input" id="accuracy" type="number" value="0">
                     </p>
                     <p class="control">
-                        <a class="button is-primary" onclick="add('aHatchNum1')">+</a>
+                        <a class="button is-primary" onclick="add('accuracy')">+</a>
                     </p>
+                    <p>out of 5 balls</p>
                 </div>
-                Predicted Hatch panels
-                <div class="field has-addons" style="padding:5px; width: 100%;">
-                    <p class="control">
-                        <a class="button is-danger" onclick="sub('hatchNum1')">-</a>
-                    </p>
-                    <p class="control">
-                        <input class="input" id="hatchNum1" type="number" value="0">
-                    </p>
-                    <p class="control">
-                        <a class="button is-primary" onclick="add('hatchNum1')">+</a>
-                    </p>
-                </div>
-                Predicted Cargo
+
+                Predicted Cycles (How many times can they go back and forth between shooting and collecting?)
                 <div class="field has-addons" style="padding:5px; width: 100%;">
                     <p class="control">
                         <a class="button is-danger" onclick="sub('cargoNum1')">-</a>
@@ -288,18 +364,32 @@
                         <a class="button is-primary" onclick="add('cargoNum1')">+</a>
                     </p>
                 </div>
-                Predicted Climb
-                <div class="field has-addons" style="padding:5px; width: 100%;">
-                    <p class="control">
-                        <a class="button is-danger" onclick="sub('climbNum1')">-</a>
-                    </p>
-                    <p class="control">
-                        <input class="input" id="climbNum1" type="number" value="0">
-                    </p>
-                    <p class="control">
-                        <a class="button is-primary" onclick="add('climbNum1')">+</a>
-                    </p>
-                </div>
+
+                Control Panel
+                <br>
+                <select id="controlwheel">
+                    <option value="0">No</option>
+                    <option value="1">Position only</option>
+                    <option value="2">Color only</option>
+                    <option value="3">Yes (Color and position)</option>
+                </select>
+
+                <br>
+                <br>
+
+                Climb capability (Can they climb?)
+                <br>
+                <select id="climb">
+                    <option value="0">No (Parks)</option>
+                    <option value="1">Maybe</option>
+                    <option value="2">Probably</option>
+                    <option value="3">Yes (100%)</option>
+                </select>
+                <br>
+                <br>
+                Notes
+                <br>
+                <textarea id="notes"></textarea>
                 <br>
                 <br>
                 <a class="button is-info" id="export" type="button" onclick="qrify1()">Export Data</a>
@@ -321,7 +411,7 @@
             };
             function qrify1() {
                 var name = "qrcode" + n2;
-                $('#codes2').prepend('<div class="boorder"><h3>Team ' + document.getElementById("teamNum").value + '</h3><div id="' + name + '" style="width:100%; height:100%; margin-top:15px; margin-bottom: 50px"></div></div><br>');
+                $('#codes2').prepend('<div class="boorder"><h3>Team ' + document.getElementById("teamNum1x").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px; padding: 10%;"></div></div><br>');
                 var qrcode = new QRCode(document.getElementById(name), {
                     width: 500,
                     height: 500
@@ -330,9 +420,15 @@
                     type: 1,
                     scoutName: document.getElementById("scoutName1").value,
                     teamNum: document.getElementById("teamNum1").value,
-                    hatch: document.getElementById("hatchNum1").value,
-                    cargo: document.getElementById("cargoNum1").value
-                };
+                    drivetrain: document.getElementById("drivetrain").options[document.getElementById("drivetrain").selectedIndex].value,
+                    ballTarget: document.getElementById("shooting").options[document.getElementById("shooting").selectedIndex].value,
+                    autoDescription: document.getElementById("autoNotes").value,
+                    p_accuracy: document.getElementById("accuracy").value,
+                    p_cycles: document.getElementById("cargoNum1").value,
+                    p_climb: document.getElementById("climb").options[document.getElementById("climb").selectedIndex].value,
+                    regNotes: document.getElementById("notes").value,
+                    controlwheel: document.getElementById("controlwheel").options[document.getElementById("controlwheel").selectedIndex].value
+                }
                 qrcode.makeCode(JSON.stringify(exportObj));
                 n++;
             }
@@ -376,6 +472,20 @@
                     <div class="column is-2">
                         <div class="field has-addons">
                             <p class="control">
+                                <button class="button is-info" onclick="download()">
+                                    <span class="icon is-large">
+                                        <i class="fas fa-download"></i>
+                                    </span>
+                                </button>
+                            </p>
+                            <p class="control">
+                                <button class="button is-primary" onclick="lookup()">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </button>
+                            </p>
+                            <p class="control">
                                 <button class="button is-info" onclick="refreshTable()">
                                     <span class="icon is-small">
                                         <i class="fas fa-sync"></i>
@@ -386,9 +496,6 @@
                                 <button class="button is-success" onclick="launchAddModal()">
                                     <span class="icon is-small">
                                         <i class="fas fa-plus"></i>
-                                    </span>
-                                    <span>
-                                        Add
                                     </span>
                                 </button>
                             </p>
@@ -420,13 +527,11 @@
                                 <th data-sort-default>Team</th>
                                 <th><abbr title="Played">Pld</abbr></th>
                                 <th><abbr title="Broke Down">BD</abbr></th>
-                                <th><abbr title="Won">W</abbr></th>
-                                <th><abbr title="Drawn">D</abbr></th>
-                                <th><abbr title="Lost">L</abbr></th>
-                                <th><abbr title="Auton Hatches per Match">A H/m</abbr></th>
-                                <th><abbr title="Auton Cargo per Match">A C/m</abbr></th>
-                                <th><abbr title="Hatches per Match">H/m</abbr></th>
-                                <th><abbr title="Cargo per Match">C/m</abbr></th>
+                                <th><abbr title="Win/Draw/Loss">W/D/L</abbr></th>
+                                <th><abbr title="Auton High per Match">A H/m</abbr></th>
+                                <th><abbr title="Auton Low per Match">A L/m</abbr></th>
+                                <th><abbr title="High per Match">H/m</abbr></th>
+                                <th><abbr title="Low per Match">L/m</abbr></th>
                                 <th><abbr title="Climb level">Climb</abbr></th>
                                 <th><abbr title="Climb Success Rate">Climb %</abbr></th>
                                 <th><abbr title="Average Points Per Game">aPPG</abbr></th>
@@ -434,16 +539,14 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Team</th>
+                                <th data-sort-default>Team</th>
                                 <th><abbr title="Played">Pld</abbr></th>
                                 <th><abbr title="Broke Down">BD</abbr></th>
-                                <th><abbr title="Won">W</abbr></th>
-                                <th><abbr title="Drawn">D</abbr></th>
-                                <th><abbr title="Lost">L</abbr></th>
-                                <th><abbr title="Auton Hatches per Match">A H/m</abbr></th>
-                                <th><abbr title="Auton Cargo per Match">A C/m</abbr></th>
-                                <th><abbr title="Hatches per Match">H/m</abbr></th>
-                                <th><abbr title="Cargo per Match">C/m</abbr></th>
+                                <th><abbr title="Win/Draw/Loss">W/D/L</abbr></th>
+                                <th><abbr title="Auton High per Match">A H/m</abbr></th>
+                                <th><abbr title="Auton Low per Match">A L/m</abbr></th>
+                                <th><abbr title="High per Match">H/m</abbr></th>
+                                <th><abbr title="Low per Match">L/m</abbr></th>
                                 <th><abbr title="Climb level">Climb</abbr></th>
                                 <th><abbr title="Climb Success Rate">Climb %</abbr></th>
                                 <th><abbr title="Average Points Per Game">aPPG</abbr></th>
@@ -479,6 +582,24 @@
                     <button class="button" onclick="launchAddModal()">Cancel</button>
                 </footer>
             </div>
+        </div>
+
+        <div class="modal" id="lookupModal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Add data</p>
+                        <button class="delete" aria-label="close" onclick="lookup()"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <!-- Content ... -->
+                        <canvas id="canvas" height="480" width="640"></canvas>
+                        <p id="success"></p>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button" onclick="lookup()">Cancel</button>
+                    </footer>
+                </div>
         </div>
 
     </div>
