@@ -22,7 +22,7 @@ function launchAddModal() {
         video.play();
         stream1 = stream;
         requestAnimationFrame(tick);
-        
+
     });
 
     function tick() {
@@ -41,13 +41,17 @@ function launchAddModal() {
                 tData = tmp;
                 $('#success').html('Found QR code! ' + code.data);
 
-                stream1.getTracks().forEach(function (track) {
+                /*stream1.getTracks().forEach(function (track) {
                     track.stop();
-                });
+                });*/
             }
         }
         requestAnimationFrame(tick);
     }
+}
+
+function lookup() {
+    $('#lookupModal').toggleClass('is-active');
 }
 
 function exportData() {
@@ -56,7 +60,7 @@ function exportData() {
 
 function importData() {
     var tmp = tData;
-    if(usedKeys.includes(tmp.key)) {
+    if (usedKeys.includes(tmp.key)) {
         alert("Data has already been entered!")
     }
     var team = tData.teamNum;
@@ -138,7 +142,7 @@ function importData() {
             obj.notes.push(tmp.regNotes)
             obj.autoNotes.push(tmp.autoDescruption)
             obj.controlwheel = tmp.controlwheel
-            
+
         }
         data.push(obj)
     } else {
@@ -151,15 +155,15 @@ function importData() {
             data[index].tLowBall += tmp.sLowBall
             data[index].aLowBall += tmp.aLowBall
             data[index].aClimbs.push(tmp.climb);
-            data[index].tCycles = ((data[index].tLowBall + data[index].tHighBall)/5)/data[index].played;
-            if(tmp.climb > 2) {
+            data[index].tCycles = ((data[index].tLowBall + data[index].tHighBall) / 5) / data[index].played;
+            if (tmp.climb > 2) {
                 data[index].didClimb++
             }
-            if(tmp.win == 0) {
+            if (tmp.win == 0) {
                 data[index].loss++;
-            } else if(tmp.win == 1) {
+            } else if (tmp.win == 1) {
                 data[index].draw++;
-            } else if(tmp.win == 2) {
+            } else if (tmp.win == 2) {
                 data[index].wins++;
             }
         } else {
@@ -170,6 +174,14 @@ function importData() {
         }
     }
     $('#addDataModal').toggleClass('is-active')
+    refreshTable();
+}
+
+function importTxtData() {
+    let _dat = document.getElementById('imprtdat').value;
+    let parsed = JSON.parse(_dat);
+    data = parsed;
+    launchAddModal();
     refreshTable();
 }
 
@@ -196,11 +208,31 @@ function download() {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)));
     element.setAttribute('download', "data.txt");
-    
+
     element.style.display = 'none';
     document.body.appendChild(element);
-    
+
     element.click();
-    
+
     document.body.removeChild(element);
+}
+
+function getTeams() {
+    var list = document.getElementById('teams').value.split(',');
+
+    $('#teamList').empty();
+
+
+
+    for (var i = 0; i < list.length; i++) {
+        var index = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].team == list[i]) {
+                index = i;
+            }
+        }
+        var tmp = data[index];
+        var str = "<div class='column'><table class='table is-striped' style='border-width:1px'><tr><th colspan='2'><strong>" + list[i] + "</strong></th></tr><tr><td>W/D/L</td><td>" + tmp.wins + '/' + tmp.draw + '/' + tmp.loss  + "</td></tr><tr><td>PCycles</td><td></td></tr><tr><td>AH/m</td><td></td></tr><tr><td>AL/m</td><td></td></tr><tr><td>H/m</td><td></td></tr><tr><td>L/m</td><td></td></tr><tr><td>Climb%</td><td></td></tr><tr><td>Notes</td><td></td></tr></table></div>"
+        $('#teamList').append(str);
+    }
 }

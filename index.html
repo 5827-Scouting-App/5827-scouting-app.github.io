@@ -265,7 +265,7 @@
                     teamNum: document.getElementById("teamNum").value,
                     matchNum: document.getElementById("matchNum").value,
                     aHighBall: document.getElementById("aHighNum").value,
-                    aLowBall: document.getElementById("aLowBall").value,
+                    aLowBall: document.getElementById("aLowNum").value,
                     sHighBall: document.getElementById("HighNum").value,
                     sLowBall: document.getElementById("LowNum").value,
                     climb: r,
@@ -411,7 +411,7 @@
             };
             function qrify1() {
                 var name = "qrcode" + n2;
-                $('#codes2').prepend('<div class="boorder"><h3>Team ' + document.getElementById("teamNum1x").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px; padding: 10%;"></div></div><br>');
+                $('#codes2').prepend('<div class="boorder"><h3>Team ' + document.getElementById("teamNum1").value + '</h3><div class="outline" id="' + name + '" style="margin-top:15px; margin-bottom: 50px; padding: 10%;"></div></div><br>');
                 var qrcode = new QRCode(document.getElementById(name), {
                     width: 500,
                     height: 500
@@ -576,30 +576,42 @@
                     <!-- Content ... -->
                     <canvas id="canvas" height="480" width="640"></canvas>
                     <p id="success"></p>
+
+                    <textarea id="imprtdat"></textarea>
                 </section>
                 <footer class="modal-card-foot">
                     <button class="button is-success" onclick="importData()">Save</button>
                     <button class="button" onclick="launchAddModal()">Cancel</button>
+                    <button class="button is-success" onclick="importTxtData()">IMPRT</button>
                 </footer>
             </div>
         </div>
 
         <div class="modal" id="lookupModal">
-                <div class="modal-background"></div>
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Add data</p>
-                        <button class="delete" aria-label="close" onclick="lookup()"></button>
-                    </header>
-                    <section class="modal-card-body">
-                        <!-- Content ... -->
-                        <canvas id="canvas" height="480" width="640"></canvas>
-                        <p id="success"></p>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button class="button" onclick="lookup()">Cancel</button>
-                    </footer>
-                </div>
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Team Lookup</p>
+                    <button class="delete" aria-label="close" onclick="lookup()"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div>
+                        <div class="field has-addons" style="padding:5px; width: 100%;">
+                            <p class="control">
+                                <input class="input" id="teams" type="number" placeholder="5827">
+                            </p>
+                            <p class="control">
+                                <a class="button is-primary" onclick="getTeams();">Go</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="columns" id="teamList">
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button" onclick="lookup()">Cancel</button>
+                </footer>
+            </div>
         </div>
 
     </div>
